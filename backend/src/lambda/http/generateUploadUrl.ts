@@ -1,11 +1,18 @@
-import 'source-map-support/register'
+import "source-map-support/register";
 
-import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+  APIGatewayProxyHandler
+} from "aws-lambda";
 
-export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const todoId = event.pathParameters.todoId
+// @ts-ignore
+export const handler: APIGatewayProxyHandler = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  //const todoId = event.pathParameters.todoId
   console.info("GenerateUploadUrlRequest handler called");
 
   // TODO: Return a presigned URL to upload a file for a TODO item with the provided id
-  return undefined
-}
+  return undefined;
+};
