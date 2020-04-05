@@ -13,7 +13,6 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
   tracing:
@@ -30,7 +29,6 @@ provider:
     AWS_XRAY_CONTEXT_MISSING: LOG_ERROR
 
 functions:
-
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
   GetTodos:
@@ -173,7 +171,6 @@ resources:
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: ApiGatewayRestApi
-
     TodosTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -199,9 +196,7 @@ resources:
               - AttributeName: ${self:provider.environment.INDEX_KEY}
                 KeyType: RANGE
             Projection:
-              ProjectionType: ALL # What attributes will be copied to an index
-
-
+              ProjectionType: ALL
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -220,7 +215,6 @@ resources:
                 - DELETE
                 - HEAD
               MaxAge: 4000
-
     BucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -234,7 +228,6 @@ resources:
               Action: 's3:GetObject'
               Resource: 'arn:aws:s3:::${self:provider.environment.TODOS_S3_BUCKET}/*'
         Bucket: !Ref AttachmentsBucket
-
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
       Properties:
@@ -245,10 +238,8 @@ resources:
         ValidateRequestParameters: false
 
 custom:
-
   serverless-offline:
     port: 3003
-
   dynamodb:
     stages:
       - ${self:provider.stage}
@@ -256,7 +247,6 @@ custom:
       port: 8000
       inMemory: true
       migrate: true
-
   documentation:
     api:
       info:
