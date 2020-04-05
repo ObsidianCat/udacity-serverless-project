@@ -7,12 +7,13 @@ import {
 } from "aws-lambda";
 import { deleteTodoById } from "../../businessLogic/todos";
 
-// @ts-ignore
-// @ts-ignore
+import { createLogger } from "../../utils/logger";
+const logger = createLogger("DeleteTodo Handler");
+
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  console.info("DeleteTodo handler called", event);
+  logger.info("DeleteTodo handler called", event);
 
   const todoId = event.pathParameters.todoId;
   const authorization = event.headers.Authorization;
@@ -20,7 +21,7 @@ export const handler: APIGatewayProxyHandler = async (
 
   await deleteTodoById(todoId, jwtToken);
 
-  console.info("DeleteTodo: todo was deleted", todoId);
+  logger.info("DeleteTodo: todo was deleted", todoId);
 
   return {
     statusCode: 200,

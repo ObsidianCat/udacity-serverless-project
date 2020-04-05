@@ -5,13 +5,12 @@ import { TodoUpdate } from "../models/TodoUpdate";
 import { TodoItem } from "../models/TodoItem";
 import { createLogger } from "../utils/logger";
 
-const logger = createLogger("todo");
+const logger = createLogger("TodosAccess");
 const AWSXray = AWSXRay.captureAWS(AWS);
 
 //For testing DynamoDB instance locally when there is no connection to the server
 function createDynamoDBClient() {
   if (process.env.IS_OFFLINE) {
-    console.log("App is offline! Creating a local DynamoDB instance");
     return new AWSXray.DynamoDB.DocumentClient({
       region: "localhost",
       endpoint: "http://localhost:8000"
@@ -24,10 +23,7 @@ export class TodosAccess {
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
     private readonly todoTable = process.env.TODOS_TABLE
-  ) {
-    console.log(`docClient ==> \n ${JSON.stringify(docClient)}`);
-    console.log(`todoTable ==> \n ${todoTable}`);
-  }
+  ) {}
 
   public async createTodo(todo: TodoItem): Promise<TodoItem> {
     logger.info(`Creating TODO for the authorised user`);

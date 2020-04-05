@@ -5,19 +5,16 @@ import {
   APIGatewayProxyResult,
   APIGatewayProxyHandler
 } from "aws-lambda";
-import { createLogger } from "../../utils/logger";
 import { parseUserId } from "../../auth/utils";
 import { getS3BucketUploadUrl } from "../../businessLogic/todos";
 
-const logger = createLogger("Generate Upload urls Handler");
+import { createLogger } from "../../utils/logger";
+const logger = createLogger("GenerateUploadUrl Handler");
 
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  //const todoId = event.pathParameters.todoId
-  logger.info("GetTodos handler start");
 
-  // extract the TODO ID from the path
   logger.info("Generate TODO image upload url");
   const todoId = event.pathParameters.todoId;
   const authorization = event.headers.Authorization;
@@ -26,6 +23,7 @@ export const handler: APIGatewayProxyHandler = async (
 
   const uploadUrl: string = getS3BucketUploadUrl(todoId, userId);
 
+  logger.info("Generate TODO image upload url: success");
   return {
     statusCode: 200,
     headers: {

@@ -5,17 +5,18 @@ import {
   APIGatewayProxyHandler,
   APIGatewayProxyResult
 } from "aws-lambda";
-// @ts-ignore
+
 import { CreateTodoRequest } from "../../requests/CreateTodoRequest";
 import { createTodo } from "../../businessLogic/todos";
 import { getUserId } from "../utils";
+import { createLogger } from "../../utils/logger";
+const logger = createLogger("CreateTodo Handler");
 
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  console.info("CreateTodo handler");
+  logger.info("CreateTodo handler");
 
-  // TODO: Implement creating a new TODO item
   const newTodo: CreateTodoRequest = JSON.parse(event.body);
 
   if (!newTodo.name) {

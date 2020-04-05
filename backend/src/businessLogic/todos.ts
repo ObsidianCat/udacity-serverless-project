@@ -50,7 +50,7 @@ export async function updateTodo(
 }
 
 export function getS3BucketUploadUrl(todoId: string, userId: string): string {
-  const bucketName = process.env.TODO_S3_BUCKET;
+  const bucketName = process.env.TODOS_S3_BUCKET;
   const urlExpiration = process.env.SIGNED_URL_EXPIRATION;
   const AWSXray = AWSXRay.captureAWS(AWS);
   const S3 = new AWSXray.S3({ signatureVersion: "v4" });

@@ -8,13 +8,15 @@ import {
 
 import { UpdateTodoRequest } from "../../requests/UpdateTodoRequest";
 import { updateTodo } from "../../businessLogic/todos";
+import { createLogger } from "../../utils/logger";
+const logger = createLogger("UpdateTodo Handler");
 
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   const todoId = event.pathParameters.todoId;
   const updatedTodo: UpdateTodoRequest = JSON.parse(event.body);
-  console.info("UpdateTodo handler called");
+  logger.info("UpdateTodo handler called");
 
   const authorization = event.headers.Authorization;
   const jwtToken = authorization.split(" ")[1];
