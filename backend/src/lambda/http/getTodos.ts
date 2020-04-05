@@ -6,7 +6,9 @@ import {
   APIGatewayProxyHandler
 } from "aws-lambda";
 import { createLogger } from "../../utils/logger";
+// @ts-ignore
 import { getUserId } from "../utils";
+// @ts-ignore
 import { getTodos } from "../../businessLogic/todos";
 const logger = createLogger("getTodos Handler");
 
@@ -17,9 +19,10 @@ export const handler: APIGatewayProxyHandler = async (
   logger.info("GetTodos handler start");
   // TODO: Get all TODO items for a current user
   const userId = getUserId(event);
-  const items = await getTodos(userId);
 
-  logger.info("GetTodos handler event", event);
+  logger.info("GetTodos handler userId", userId );
+
+  const items = await getTodos(userId);
   logger.info("GetTodos handler items", event);
 
   return {

@@ -7,17 +7,27 @@ import {
 } from "aws-lambda";
 
 import { UpdateTodoRequest } from "../../requests/UpdateTodoRequest";
+import { updateTodo } from "../../businessLogic/todos";
 
 // @ts-ignore
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  // @ts-ignore
   const todoId = event.pathParameters.todoId;
-  // @ts-ignore
   const updatedTodo: UpdateTodoRequest = JSON.parse(event.body);
-  console.info("Update Todo handler called");
+  console.info("UpdateTodo handler called");
 
-  // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
-  return undefined;
+  const authorization = event.headers.Authorization;
+  const jwtToken = authorization.split(' ')[1];
+
+  await updateTodo(updatedTodo, todoId, jwtToken);
+
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true
+    },
+    body: '{}'
+  };
 };
