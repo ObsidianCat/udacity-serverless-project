@@ -16,7 +16,7 @@ export const handler: APIGatewayProxyHandler = async (
 
   const todoId = event.pathParameters.todoId;
   const authorization = event.headers.Authorization;
-  const jwtToken = authorization.split(' ')[1];
+  const jwtToken = authorization.split(" ")[1];
 
   await deleteTodoById(todoId, jwtToken);
 

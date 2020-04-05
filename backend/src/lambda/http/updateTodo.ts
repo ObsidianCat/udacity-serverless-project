@@ -9,7 +9,6 @@ import {
 import { UpdateTodoRequest } from "../../requests/UpdateTodoRequest";
 import { updateTodo } from "../../businessLogic/todos";
 
-// @ts-ignore
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
@@ -18,7 +17,7 @@ export const handler: APIGatewayProxyHandler = async (
   console.info("UpdateTodo handler called");
 
   const authorization = event.headers.Authorization;
-  const jwtToken = authorization.split(' ')[1];
+  const jwtToken = authorization.split(" ")[1];
 
   await updateTodo(updatedTodo, todoId, jwtToken);
 
@@ -28,6 +27,6 @@ export const handler: APIGatewayProxyHandler = async (
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true
     },
-    body: '{}'
+    body: "{}"
   };
 };

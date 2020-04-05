@@ -1,4 +1,3 @@
-
 export interface Jwks {
-  keys: [any]
+  keys: [any];
 }
